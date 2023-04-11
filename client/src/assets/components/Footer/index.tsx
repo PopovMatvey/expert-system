@@ -1,5 +1,5 @@
 import React from "react";
-import logo from '../../images/logo.svg';
+import logo from '../../images/tourstore_logo.png';
 import "./css/style.css";
 
 export function Footer() {
@@ -8,9 +8,9 @@ export function Footer() {
         <footer>
             <div className="footer-content">
                 <img src={logo} className="App-logo" alt="logo" />
-                <h1>React app</h1>
+                <h1>Подбор тура</h1>
             </div>
-            <span>Template. Clear react app project</span>
+            <span>Copyright © 2023 Web by Popov Matvey.</span>
         </footer>
     );
 }

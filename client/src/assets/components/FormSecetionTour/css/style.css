@@ -1,0 +1,6 @@
+/* Подбор тура */
+.form-selection-tour_container{
+    border: 2px solid red;
+    width: 40%;
+    padding: 20px;
+}
