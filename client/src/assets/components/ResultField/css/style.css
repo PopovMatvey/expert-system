@@ -1,6 +1,6 @@
 /* Поле результата */
 .result-field_container{
     border: 2px solid green;
-    width: 40%;
+    width: 50%;
     padding: 20px;
 }
