@@ -2,6 +2,7 @@
 .header-information {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
 }
@@ -9,8 +10,10 @@
 .header-information h1 {
     font-size: 30px;
     font-weight: bold;
+    margin: 10px;
 }
 
 .header-information img {
-    height: 100px;
+    height: 80px;
+    margin: 10px;
 }

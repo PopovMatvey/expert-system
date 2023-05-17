@@ -1,6 +1,8 @@
 /* Подбор тура */
 .form-selection-tour_container{
     width: 50%;
+    min-width: 280px;
+    max-width: 400px;
     padding: 20px;
 }
 

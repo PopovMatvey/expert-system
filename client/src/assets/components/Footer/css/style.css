@@ -6,18 +6,21 @@ footer{
 
 footer h1{
     font-family: 'BerlinTypeBold';
-    font-size: 30px
+    font-size: 30px;
+    margin: 10px;
 }
 
 .footer-content{
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
 }
 
 .footer-content img{
-    height: 100px;
+    height: 80px;
+    margin: 10px;
 }
 
 footer span{

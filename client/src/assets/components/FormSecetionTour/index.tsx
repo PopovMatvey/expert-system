@@ -1,29 +1,29 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import "./css/style.css";
 import { countriesArray } from "../../data/countries";
+import { useFormSelection } from "../../hook/useFormFieldSelection";
 
 export function FormSelectionTour() {
-    const [countryInput, setInputValue] = useState("");
-    const [amountStars, setAmountStars] = useState(3);
-    const [amountNight, setAmountHight] = useState(8);
-    const [amountAdults, setAmountAdults] = useState(0);
-    const [amountKids, setAmountKids] = useState(0);
-    const [resultCount, setResultCount] = useState(30000);
+    const {
+        countryInput, setInputValue, amountStars, setAmountStars, amountNight, setAmountHight,
+        amountAdults, setAmountAdults, amountKids, setAmountKids, resultCount, setResultCount,
+    } = useFormSelection()
 
     // Обработчик отправки формы
     const hendlerSubmitSelectionForm = async (event: any) => {
         event.preventDefault();
-        console.log(typeof (event))
+
     }
 
     // Обработчик ввода страны
-    const heandlerCountryInput = (event: any) => {
-        setInputValue(event.target.value);
+    const heandlerCountryOption = (event: any) => {
+        setInputValue(event.target[event.target.value].innerHTML);
     }
 
     // Обработчик ввода количества звёзд
     const heandlerAmountStarsInput = (event: any) => {
         setAmountStars(event.target.value);
+        console.log(countryInput);
     }
 
     // Обработчик ввода количество ночей
@@ -52,8 +52,7 @@ export function FormSelectionTour() {
                 <form onSubmit={hendlerSubmitSelectionForm}>
                     <div className="form-selection-tour_form__row">
                         <h3>Страна</h3>
-                        {/* <input type="text" value={countryInput} onChange={heandlerCountryInput} /> */}
-                        <select>
+                        <select onChange={heandlerCountryOption}>
                             {
                                 countriesArray.map((element: any, index: number) => (
                                     <option key={index++} value={index++}>{element}</option>
@@ -63,23 +62,23 @@ export function FormSelectionTour() {
                     </div>
                     <div className="form-selection-tour_form__row">
                         <h3>Количество звёзд</h3>
-                        <input type="number" value={amountStars} onChange={heandlerAmountStarsInput} />
+                        <input type="number" value={amountStars} min={3} max={5} onChange={heandlerAmountStarsInput} />
                     </div>
                     <div className="form-selection-tour_form__row">
                         <h3>Количество ночей</h3>
-                        <input type="number" value={amountNight} onChange={heandlerAmountNightInput} />
+                        <input type="number" value={amountNight} min={1} onChange={heandlerAmountNightInput} />
                     </div>
                     <div className="form-selection-tour_form__row">
                         <h3>Количество взрослых</h3>
-                        <input type="number" value={amountAdults} onChange={heandlerAmountAdultsInput} />
+                        <input type="number" value={amountAdults} min={1} onChange={heandlerAmountAdultsInput} />
                     </div>
                     <div className="form-selection-tour_form__row">
                         <h3>Количество детей</h3>
-                        <input type="number" value={amountKids} onChange={heandlerAmountKidsInput} />
+                        <input type="number" value={amountKids} min={0} onChange={heandlerAmountKidsInput} />
                     </div>
                     <div className="form-selection-tour_form__row">
                         <h3>Закладываемая стоимость</h3>
-                        <input type="number" value={resultCount} step={1000} onChange={heandlerResultCountInput} />
+                        <input type="number" value={resultCount} min={10000} step={1000} onChange={heandlerResultCountInput} />
                     </div>
                     <div className="form-selection-tour_form__row">
                         <input type="submit" className="submit-button" value={"Найти тур"} />
