@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./css/style.css";
 import '../FormSecetionTour/css/style.css';
 import '../ResultField/css/style.css';
@@ -12,11 +12,43 @@ import { TToursCard } from "../../types/toursCard";
 
 // Выбор тура
 export function TourSelection() {
+
+
     /*Form selection*/
     const {
         countryInput, setInputValue, amountStars, setAmountStars, amountNight, setAmountHight,
         amountAdults, setAmountAdults, amountKids, setAmountKids, resultCount, setResultCount,
     } = useFormSelection()
+    const [sortedArrayTourCard, setSortedArrayTourCard] = useState(processedTourArray(
+        arrayToursCard, countryInput, amountStars, amountNight,
+        amountAdults, amountKids, resultCount));
+
+    // Обработка массива туров
+    function processedTourArray(array: any[],
+        parCountry: any, parAmountStars: any, parAmountNight: any,
+        amountAults: any, amountKids: any, parResultCount: any) {
+
+        let returnedArray: any = [];
+
+        for (let i = 0; i < array.length; i++) {
+
+            console.log((parAmountStars == array[i].stars));
+
+            if (
+                (parCountry === array[i].country)
+                && 
+                (parResultCount >= array[i].price)
+                &&
+                (parAmountStars == array[i].stars)
+            ) {
+                    returnedArray.push(array[i])
+            }
+        }
+
+        return returnedArray;
+    }
+
+
 
     // Обработчик отправки формы
     const hendlerSubmitSelectionForm = async (event: any) => {
@@ -27,12 +59,19 @@ export function TourSelection() {
     // Обработчик ввода страны
     const heandlerCountryOption = (event: any) => {
         setInputValue(event.target[event.target.value].innerHTML);
+        console.log(countryInput)
+        setSortedArrayTourCard(processedTourArray(
+            arrayToursCard, countryInput, amountStars, amountNight,
+            amountAdults, amountKids, resultCount));
     }
 
     // Обработчик ввода количества звёзд
     const heandlerAmountStarsInput = (event: any) => {
         setAmountStars(event.target.value);
-        console.log(countryInput);
+        console.log(amountStars);
+        setSortedArrayTourCard(processedTourArray(arrayToursCard,
+            countryInput, amountStars, amountNight,
+            amountAdults, amountKids, resultCount));
     }
 
     // Обработчик ввода количество ночей
@@ -65,6 +104,13 @@ export function TourSelection() {
     //     <ResultField/>
     // </>
 
+    useEffect(() => {
+        setSortedArrayTourCard(processedTourArray(arrayToursCard,
+            countryInput, amountStars, amountNight,
+            amountAdults, amountKids, resultCount));
+    }, [countryInput, amountStars, amountNight,
+        amountAdults, amountKids, resultCount])
+
     return (
         <>
             <>
@@ -84,7 +130,7 @@ export function TourSelection() {
                             <h3>Количество звёзд</h3>
                             <input type="number" value={amountStars} min={3} max={5} onChange={heandlerAmountStarsInput} />
                         </div>
-                        <div className="form-selection-tour_form__row">
+                        {/* <div className="form-selection-tour_form__row">
                             <h3>Количество ночей</h3>
                             <input type="number" value={amountNight} min={1} onChange={heandlerAmountNightInput} />
                         </div>
@@ -95,7 +141,7 @@ export function TourSelection() {
                         <div className="form-selection-tour_form__row">
                             <h3>Количество детей</h3>
                             <input type="number" value={amountKids} min={0} onChange={heandlerAmountKidsInput} />
-                        </div>
+                        </div> */}
                         <div className="form-selection-tour_form__row">
                             <h3>Закладываемая стоимость</h3>
                             <input type="number" value={resultCount} min={10000} step={1000} onChange={heandlerResultCountInput} />
@@ -110,8 +156,9 @@ export function TourSelection() {
                 <h2>Предложенные туры</h2>
                 <div className="result-field_container">
                     {
-                        arrayToursCard.map((element: TToursCard) => (
+                        sortedArrayTourCard.map((element: TToursCard, i: number) => (
                             <ToursCard
+                                key={i++}
                                 title={element.title}
                                 image={element.image}
                                 stars={element.stars}
